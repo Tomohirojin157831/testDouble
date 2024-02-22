@@ -9,7 +9,7 @@ import FakeAuthServer from './FakeAuthServer'
 // 認証サーバーにユーザーID渡した時、認証済みならユーザー情報を、認証できていなければundefinedを返します。
 // ただし、Fakeにはロジックが含まれるため、Fakeに対してのテストも必要となります。
 
-
+// Fakeのテスト
 describe('認証サーバーのFakeのテスト', () => {
     it('ログイン済みのユーザーなら、ユーザー情報を返す', async () => {
         const fakeAuthServer = new FakeAuthServer()
@@ -19,7 +19,7 @@ describe('認証サーバーのFakeのテスト', () => {
 
         expect(user).toEqual({name: "user name", email: "example@mail.com"})
     })
-
+    // ナイス最小限👍
     it('ユーザーがログイン済みでない場合、undefinedを返す', async () => {
         const fakeAuthServer = new FakeAuthServer()
 
@@ -27,8 +27,20 @@ describe('認証サーバーのFakeのテスト', () => {
 
         expect(user).toBeUndefined()
     })
+
+    it('ログインしていないユーザーIDをgetUserに渡して実行するとundefinedを返す', async () => {
+        const fakeAuthServer = new FakeAuthServer()
+        fakeAuthServer.login("someone")
+
+
+        const user = await fakeAuthServer.getUser("other user id")
+
+
+        expect(user).toBeUndefined()
+    })
 })
 
+// 実装のテスト
 describe('LaunchFireworkImplのテスト', () => {
     it('launchBy()にログイン済みのユーザーIDを渡した場合、花火が打ち上げられる', async () => {
         const fakeAuthServer = new FakeAuthServer()

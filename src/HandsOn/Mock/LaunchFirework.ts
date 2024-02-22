@@ -9,7 +9,14 @@ export class LaunchFireworkImpl implements LaunchFireworkSystem {
         this.password = password
     }
 
-    launch() {
+    launch() { // Ping-Pong Pairing:
         // テストが通るように実装してください
+        if (this.password === '55party') {
+            this.firework.fire()
+        } else {
+            this.firework.disable()
+        }
     }
 }
+
+// TDDサイクル: Red - Green - Refactor

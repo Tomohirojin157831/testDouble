@@ -9,7 +9,7 @@ import SpyFirework from './SpyFirework'
 // リファクタリングの結果、Spyにアサートが含まれることとなりましたが、それはもうすでにSpyではなくMock（自己検証するSpy）です。
 
 describe('花火打ち上げシステム（LaunchFireworkImpl）のテスト', () => {
-
+    // ⇩ここは昨日やったSpyのテストです
     describe('リファクタ前', () => {
         it('正しいpasswordが設定されている場合、花火を打ち上げて中止はしないこと', () => {
             const spyFirework = new SpyFirework()
@@ -39,6 +39,11 @@ describe('花火打ち上げシステム（LaunchFireworkImpl）のテスト', (
     })
 
     describe('リファクタ後', () => {
+        // fireを実行する時はdisableは実行しない
+        // disableを実行する時はfireは実行しない
+        // ↑これは対になっていて、両方とも呼ばれることはないですね
+        // mockはソフトウェアの期待する振る舞いを知っています
+        // パスワードが有効な時・無効な時それぞれのケースで期待する振る舞いを、メソッドにまとめてMock自身が検証します。
         it('正しいpasswordが設定されている場合、花火を打ち上げて中止はしないこと', () => {
             const mockFirework = new MockFirework()
             const correctPassword = '55party'
